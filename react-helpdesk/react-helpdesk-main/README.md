@@ -1,13 +1,13 @@
 # React-Project
 
-นี่คือเว็บแอพพลิเคชั่นเกี่ยวกับระบบแจ้งซ่อมและเคลมอุปกรณ์ไอที กรณีศึกษาจากบริษัท ไอที เวอร์เทคซ์ จำกัด 
+This is a Web Application for tracking hardware in System
 
 ## Installation
 
-สามารถติดตั้ง Package ของ Nodejs และ React ได้ตามนี้เลยครับ 
+Can Install Package  Nodejs and React follow this :
 
 ```bash
-# ฝั่ง Server
+# Server
 
 npm install mysql
 
@@ -25,7 +25,7 @@ npm install util
 ```
 
 ```bash
-# ฝั่ง React
+# React
 
 npm install react-router-dom
 
@@ -38,12 +38,12 @@ npm install react-chartjs-2 chart.js
 
 ## จัดทำโดย
 
-1. นายสุกฤษฎิ์ แซ่เลี้ยว (Back-End)
-2. นายนิธิ ทองวงศ์ (Front-End)
+1. Patiparn Lekmard (Back-End)
+2. Nithi Thongwrong (Front-End)
 
-## ขอบคุณที่ปรึกษาทุกท่าน (Friend)
+## Thank you Friend
 
-รุส , ยูกิ , ปอนด์ , ภูมิ และคนอื่น ๆ ^ ^
+Jameball 
 
 
 
