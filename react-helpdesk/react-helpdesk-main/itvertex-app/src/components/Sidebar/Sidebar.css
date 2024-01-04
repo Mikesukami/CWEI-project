@@ -1,0 +1,24 @@
+li a:hover {
+    color: orange;
+}
+
+.open {
+    display: flex;
+}
+
+.closed {
+    display: none;
+}
+
+.sidebar {
+    transition: width 0.3s ease; /* Add a transition effect for the width property */
+  }
+  
+  .sidebar.expanded {
+    width: 300px; /* Initial width when expanded */
+  }
+  
+  .sidebar.collapsed {
+    width: 0; /* Width when collapsed */
+    overflow: hidden; /* Hide the content when collapsed */
+  }
