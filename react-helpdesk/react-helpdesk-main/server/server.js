@@ -394,7 +394,8 @@ app.get("/api/report", (req, res) => {
 });
 
 app.get("/api/cctv_read_all", checkAuth, (req, res) => {
-    const query = "SELECT * FROM tbl_ipc";
+    const query = "SELECT t1.ipc_id, t1.ipc_address, t1.ipc_name, t2.ipc_status_name FROM tbl_ipc t1" +
+    " JOIN tbl_ipc_status t2 ON t1.ipc_status = t2.ipc_status";
 
     pool.query(query, (error, results) => {
         if (error) {
