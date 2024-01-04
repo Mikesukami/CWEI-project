@@ -409,7 +409,9 @@ app.get("/api/cctv_read_all", checkAuth, (req, res) => {
                 data: results,
             });
         }
+        console.log(results);
     });
+
 });
 
 app.listen(port, () => {

@@ -13,6 +13,7 @@ import RepairPage2 from "./components/Repair/RepairPage2";
 import RepairPage3 from "./components/Repair/RepairPage3";
 import RepairPage4 from "./components/Repair/RepairPage4";
 import RepairPage5 from "./components/Repair/RepairPage5";
+import Cctv from "./components/CCTV/CCTV";
 
 function App() {
   return (
@@ -115,6 +116,15 @@ function App() {
               <div style={{display: "flex"}}>
                 <Sidebar />
                 <RepairPage5 />
+              </div>
+            }
+          />
+          <Route
+            path="/cctv/all"
+            element={
+              <div style={{display: "flex"}}>
+                <Sidebar />
+                <Cctv />
               </div>
             }
           />

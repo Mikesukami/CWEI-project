@@ -141,7 +141,7 @@ export default function Sidebar() {
                         <div className="collapse" id="cctv-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <Link to="/repair/page1" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
+                                    <Link to="/cctv/all" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <RiFileList2Line style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>รายการทั้งหมด</span>
                                     </Link>
