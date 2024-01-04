@@ -393,6 +393,23 @@ app.get("/api/report", (req, res) => {
     
 });
 
+app.get("/api/cctv_read_all", checkAuth, (req, res) => {
+    const query = "SELECT * FROM tbl_ipc";
+
+    pool.query(query, (error, results) => {
+        if (error) {
+            res.json({
+                result: false,
+                message: error.message,
+            });
+        } else {
+            res.json({
+                result: true,
+                data: results,
+            });
+        }
+    });
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
