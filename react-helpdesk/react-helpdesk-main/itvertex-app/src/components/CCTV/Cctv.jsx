@@ -29,7 +29,6 @@ export default function Customer() {
             const result = json.data.filter((item)=> item.ipc_address.includes(search)|| item.ipc_name.includes(search));
 
             setCctvdata(result);
-            console.log(result);
         }
         fetchData();
 
