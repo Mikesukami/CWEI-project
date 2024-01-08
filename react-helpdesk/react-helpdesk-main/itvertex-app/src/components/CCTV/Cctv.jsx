@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import CctvItem from './CctvItem';
 import Pagination from 'react-bootstrap/Pagination';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { left } from '@popperjs/core';
 
 export default function Customer() {
     const [search, setSearch] = useState("");
@@ -66,7 +67,7 @@ export default function Customer() {
     };
 
     return (
-        <div style={{ background: '#eaeaea', width: '100%', height: '100vh' }}>
+        <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh'}}>
             <Link className="btn btn-success btn-sm" to="/customer/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+เพิ่มข้อมูลลูกค้า</Link>
 
             <InputGroup style={{ marginLeft: '3rem', marginTop: '30px', width: '40%' }}>
@@ -102,7 +103,7 @@ export default function Customer() {
                     </tbody>
                 </Table>
             </div>
-            <div className='container mt-3 border-bottom'>
+            <div className='container mt-3 border-bottom' style={{ marginLeft:'50px'}}>
                 <Pagination>
                     <Pagination.First onClick={firstPage} />
                     <Pagination.Prev disabled={currentPage === 0} onClick={() => setCurrentPage(currentPage - 1)} />

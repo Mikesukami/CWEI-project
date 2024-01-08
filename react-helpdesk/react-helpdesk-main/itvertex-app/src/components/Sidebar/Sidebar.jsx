@@ -29,7 +29,7 @@ import React, { useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
 
 export default function Sidebar() {
-    const [sidebarExpanded, setSidebarExpanded] = useState(true);
+    const [sidebarExpanded, setSidebarExpanded] = useState(false);
     const u_name = localStorage.getItem("u_name");
     const u_lastname = localStorage.getItem("u_lastname");
 
@@ -245,13 +245,13 @@ export default function Sidebar() {
                     </ul>
                 </div>
             </div>
+            </div>
             <button
                 className="btn btn-dark position-absolute top-0 end-0 m-3"
                 onClick={toggleSidebar}
             >
                 <IoMenu size={30} />
             </button>
-            </div>
         </>
     );
 }
