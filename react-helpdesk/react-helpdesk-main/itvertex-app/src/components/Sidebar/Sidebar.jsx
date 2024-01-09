@@ -29,7 +29,7 @@ import React, { useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
 
 export default function Sidebar() {
-    const [sidebarExpanded, setSidebarExpanded] = useState(false);
+    const [sidebarExpanded, setSidebarExpanded] = useState(true);
     const u_name = localStorage.getItem("u_name");
     const u_lastname = localStorage.getItem("u_lastname");
 
