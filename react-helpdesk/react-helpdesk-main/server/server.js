@@ -7,6 +7,9 @@ const jwt = require('jsonwebtoken');
 const util = require('util');
 // *------------------------------
 
+// *---------- Library ------------
+const Cctv = require('./libs/Cctv');
+
 
 // *----------- Use --------------
 const app = express(); // * ตัวแปร app เป็นตัวแปรใช้เรียกในส่วนของ express
@@ -430,6 +433,28 @@ app.get("/api/ipc_status_name", checkAuth, (req, res) => {
         }
     });
 });
+
+app.post("/api/cctv/create", checkAuth, async (req, res) => {
+    const input = req.body;
+
+    try {
+        var result = await Cctv.createCctv(pool,
+            input.ipc_address,
+            input.ipc_name,
+            input.ipc_status);
+            
+        res.json({
+            result: true,
+        });    
+
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
