@@ -413,6 +413,24 @@ app.get("/api/cctv_read_all", checkAuth, (req, res) => {
 
 });
 
+app.get("/api/ipc_status_name", checkAuth, (req, res) => {
+    const query = "SELECT * FROM tbl_ipc_status";
+
+    pool.query(query, (error, results) => {
+        if (error) {
+            res.json({
+                result: false,
+                message: error.message,
+            });
+        } else {
+            res.json({
+                result: true,
+                data: results,
+            });
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
