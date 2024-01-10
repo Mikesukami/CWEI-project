@@ -130,7 +130,7 @@ function App() {
             }
           />
           <Route
-            path="/cctv/create"
+            path="/cctv/:create"
             element={
               <div style={{display: "flex"}}>
                 <Sidebar />
@@ -138,6 +138,7 @@ function App() {
               </div>
             }
           />
+
           <Route path="*" element={<NotFound/>}/> //*หน้าอื่น ๆ ที่ไม่เกี่ยวข้อง 404
       </Routes>
     </BrowserRouter>
