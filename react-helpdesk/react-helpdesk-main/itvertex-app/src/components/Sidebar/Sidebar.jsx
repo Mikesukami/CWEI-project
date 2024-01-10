@@ -27,15 +27,39 @@ import "./Sidebar.css"
 import { auto } from '@popperjs/core';
 import React, { useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
+import { ConfirmModal } from '../Modal';
 
 export default function Sidebar() {
     const [sidebarExpanded, setSidebarExpanded] = useState(true);
     const u_name = localStorage.getItem("u_name");
     const u_lastname = localStorage.getItem("u_lastname");
 
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [confirmModalTitle, setConfirmModalTitle] = useState("");
+    const [confirmModalMessage, setConfirmModalMessage] = useState("");
+
     let navigate = useNavigate();
     // -----------------------------------------------------
+
+    const onHide = () => {
+        setShowConfirmModal(false);
+    }
+
+    const getMessageModal = () => {
+        return (
+            <ConfirmModal
+                show={showConfirmModal}
+                title="ออกจากระบบ"
+                message="คุณต้องการออกจากระบบใช่หรือไม่"
+                confirm={Logout}
+                onHide={onHide}
+            />
+        )
+    }
+    
     function Logout() {
+        setShowConfirmModal(true);
+
         Swal.fire({
             title: 'คุณได้ออกจากระบบ',
             text: 'ขอบคุณที่ใช้บริการ กำลังเข้าสู่หน้าเข้าสู่ระบบ',
@@ -55,6 +79,7 @@ export default function Sidebar() {
     // -----------------------------------------------------
     return (
         <>
+        {getMessageModal()}
          <div className={`sidebar ${sidebarExpanded ? 'expanded' : 'collapsed'}`}>
             <div
                 className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
@@ -238,7 +263,7 @@ export default function Sidebar() {
                         aria-labelledby="dropdownUser1"
                     >
                         <li>
-                            <a className="dropdown-item" href="#" onClick={Logout}>
+                            <a className="dropdown-item" href="#" onClick={() => setShowConfirmModal(true)}>
                                 ออกจากระบบ
                             </a>
                         </li>
