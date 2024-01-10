@@ -31,7 +31,7 @@ export default function CctvDetail() {
         console.log("handleSubmit");
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-        
+            console.log("false");
           event.preventDefault();
           event.stopPropagation();
         } else {
@@ -68,7 +68,7 @@ export default function CctvDetail() {
                     <Card>
                         <Card.Header as="h5" className="bg-primary text-white">เพิ่มข้อมูล CCTV</Card.Header>
                         <Card.Body>
-                            <Form noValidate validated={validated}>
+                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 <FormGroup as={Row} className="mb-3" controlId="formPlaintextPassword">
                                     <Form.Label column sm="2"> IP Address <span className="text-danger"> * </span> : </Form.Label>
                                     <Col sm="5"> 
@@ -113,7 +113,7 @@ export default function CctvDetail() {
                                     </Form.Control.Feedback>
                                 </FormGroup>
                                 <hr />
-                                <Button type="button" as="input"  className="sign-btn" value="SAVE" style={{background: 'green' , border: '0'}} onClick={handleSubmit}/>
+                                <Button type="submit" as="input"  className="sign-btn" value="SAVE" style={{background: 'green' , border: '0'}} />
                             </Form>
                         </Card.Body>
                     </Card>
