@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { API_GET } from '../../api';
 import { Card, Row, Col, Button, Form, FormGroup } from 'react-bootstrap';
+import { CctvProvider } from '../../Provider/CctvProvider';
+import { ConfirmModal } from '../Modal';
 
 export default function CctvDetail() {
     let params = useParams();
@@ -11,6 +13,8 @@ export default function CctvDetail() {
     const [ipcStatus, setIpcStatus] = useState(0);
     const [ipcStatusName, setIpcStatusName] = useState([]);
     const [validated, setValidated] = useState(false);
+    const [ipcId, setIpcId] = useState(0);
+
 
     useEffect(() => {
         async function fetchData() {
@@ -23,26 +27,38 @@ export default function CctvDetail() {
         fetchData();
     }, []);
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const response = await fetch(
-    //             "http://localhost:4080/api/cctv_read_by_id/" + params.id,
-    //         )
-    //     }
-    // }, []);
-
     const handleSubmit = (event) => {
+        console.log("handleSubmit");
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
+        
           event.preventDefault();
           event.stopPropagation();
+        } else {
+           if (params.create === "create"){
+                doCreateCctv();
+              } else {
+                doUpdateCctv();
+              }
         }
     
         setValidated(true);
       };
 
-    function cctvCreate(){
+    const doCreateCctv = async () => {
+        console.log(ipAddress, cctvName, ipcStatus);
+        let json = await CctvProvider.createCctv(ipAddress, cctvName, ipcStatus);
+        if (json.result){
+            window.location = "/cctv/all";
+        }
+    }
 
+    const doUpdateCctv = async () => {
+        console.log("update?");
+    }
+
+    const buttonClick = () => {
+        console.log("button click");
     }
 
     return (
@@ -52,7 +68,7 @@ export default function CctvDetail() {
                     <Card>
                         <Card.Header as="h5" className="bg-primary text-white">เพิ่มข้อมูล CCTV</Card.Header>
                         <Card.Body>
-                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            <Form noValidate validated={validated}>
                                 <FormGroup as={Row} className="mb-3" controlId="formPlaintextPassword">
                                     <Form.Label column sm="2"> IP Address <span className="text-danger"> * </span> : </Form.Label>
                                     <Col sm="5"> 
@@ -97,7 +113,7 @@ export default function CctvDetail() {
                                     </Form.Control.Feedback>
                                 </FormGroup>
                                 <hr />
-                                <Button type="submit" className="sign-btn" style={{background: 'green' , border: '0'}}>บันทึก</Button>
+                                <Button type="button" as="input"  className="sign-btn" value="SAVE" style={{background: 'green' , border: '0'}} onClick={handleSubmit}/>
                             </Form>
                         </Card.Body>
                     </Card>
