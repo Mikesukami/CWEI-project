@@ -12,7 +12,7 @@ export default function Customer() {
     const [search, setSearch] = useState("");
     const [cctvdata, setCctvdata] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [numPerPage, setNumPerPage] = useState(5);
+    const [numPerPage, setNumPerPage] = useState(10);
 
     useEffect(() => {
         async function fetchData() {
