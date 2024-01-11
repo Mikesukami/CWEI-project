@@ -15,6 +15,8 @@ export default function CctvDetail() {
     const [validated, setValidated] = useState(false);
     const [ipcId, setIpcId] = useState(0);
 
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+
 
     useEffect(() => {
         async function fetchData() {
@@ -35,8 +37,9 @@ export default function CctvDetail() {
           event.preventDefault();
           event.stopPropagation();
         } else {
+          event.preventDefault(); // Prevent the default form submission
            if (params.create === "create"){
-                doCreateCctv();
+                setShowConfirmModal(true);
               } else {
                 doUpdateCctv();
               }
@@ -57,12 +60,32 @@ export default function CctvDetail() {
         console.log("update?");
     }
 
-    const buttonClick = () => {
-        console.log("button click");
+    const onHide = () => {
+        setShowConfirmModal(false);
+    }
+
+    const getMessageModal = () => {
+
+        const modalTitle = params.create === "create" ? "เพิ่มข้อมูล CCTV" : "อัปเดตข้อมูล CCTV";
+        const modalMessage =
+        params.create === "create"
+            ? "คุณต้องการเพิ่มข้อมูล CCTV ใช่หรือไม่?"
+            : "คุณต้องการอัปเดตข้อมูล CCTV ใช่หรือไม่?";
+        
+        return (
+            <ConfirmModal
+                show={showConfirmModal}
+                title={modalTitle}
+                message={modalMessage}
+                confirm={params.create === "create" ? doCreateCctv : doUpdateCctv}
+                onHide={onHide}
+            />
+        )
     }
 
     return (
         <>
+            {getMessageModal()}
             <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
                 <div style={{ margin: '3rem', marginTop: '5rem' }}>
                     <Card>
