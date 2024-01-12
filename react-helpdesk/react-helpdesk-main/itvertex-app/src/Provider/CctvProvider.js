@@ -11,12 +11,13 @@ export const CctvProvider = {
         return json;
     },
 
-    updateCctv: async (pool, ipcId, ipcAddress, ipcName, ipcStatus) => {
+    updateCctv: async (ipcId, ipAddress, ipcName, ipcStatus) => {
+
         var json = await API_POST("cctv/update",{
-            ipcId: ipcId,
-            ipcAddress: ipcAddress,
-            ipcName: ipcName,
-            ipcStatus: ipcStatus
+            ipc_id: ipcId,
+            ipc_address: ipAddress,
+            ipc_name: ipcName,
+            ipc_status: ipcStatus
         });
         
         return json;

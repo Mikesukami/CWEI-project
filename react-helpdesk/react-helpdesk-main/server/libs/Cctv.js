@@ -16,9 +16,13 @@ module.exports = {
         return await pool.query(sql);
     },
 
-    updateCctv: async (pool, ipcId, ipcAddress, ipcName, ipcStatus) => {
-        var sql = "UPDATE tbl_ipc SET ipc_address = ?, ipc_name = ?, ipc_status = ? WHERE ipc_id = ?";
-        sql = mysql.format(sql, [ipcAddress, ipcName, ipcStatus, ipcId]);
+    updateCctv: async (pool, ipcId, ipAddress, ipcName, ipcStatus) => {
+        var sql = "UPDATE tbl_ipc SET "
+                + "ipc_address=?,"
+                + "ipc_name=?,"
+                + "ipc_status=? "
+                + "WHERE ipc_id = ?";
+        sql = mysql.format(sql, [ipAddress, ipcName, ipcStatus, ipcId]);
 
         return await pool.query(sql);
     },

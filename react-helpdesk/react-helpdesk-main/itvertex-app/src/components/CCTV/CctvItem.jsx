@@ -26,7 +26,7 @@ export default function CctvItem(props) {
                 backgroundColor: "yellow",
                 borderRadius: "5px",
                 color: "black",
-                padding: "5px", // Adjust the padding as needed
+                padding: "2px", // Adjust the padding as needed
             };
             break;
         default:

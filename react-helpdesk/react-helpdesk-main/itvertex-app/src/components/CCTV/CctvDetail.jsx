@@ -59,10 +59,10 @@ export default function CctvDetail() {
           event.stopPropagation();
         } else {
           event.preventDefault(); // Prevent the default form submission
-           if (params.create === "create"){
+           if (params.ipcId === "create"){
                 setShowConfirmModal(true);
               } else {
-                doUpdateCctv();
+                setShowConfirmModal(true);
               }
         }
     
@@ -70,6 +70,7 @@ export default function CctvDetail() {
       };
 
     const doCreateCctv = async () => {
+
         console.log(ipAddress, cctvName, ipcStatus);
         let json = await CctvProvider.createCctv(ipAddress, cctvName, ipcStatus);
         if (json.result){
@@ -78,10 +79,9 @@ export default function CctvDetail() {
     }
 
     const doUpdateCctv = async () => {
-        console.log("update?");
         let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus);
         if (json.result){
-            // window.location = "/cctv/all";
+            window.location = "/cctv/all";
         }
     }
 
@@ -91,9 +91,9 @@ export default function CctvDetail() {
 
     const getMessageModal = () => {
 
-        const modalTitle = params.create === "create" ? "เพิ่มข้อมูล CCTV" : "อัปเดตข้อมูล CCTV";
+        const modalTitle = params.ipcId === "create" ? "เพิ่มข้อมูล CCTV" : "อัปเดตข้อมูล CCTV";
         const modalMessage =
-        params.create === "create"
+        params.ipcId === "create"
             ? "คุณต้องการเพิ่มข้อมูล CCTV ใช่หรือไม่?"
             : "คุณต้องการอัปเดตข้อมูล CCTV ใช่หรือไม่?";
         
@@ -102,7 +102,7 @@ export default function CctvDetail() {
                 show={showConfirmModal}
                 title={modalTitle}
                 message={modalMessage}
-                confirm={params.create === "create" ? doCreateCctv : doUpdateCctv}
+                confirm={params.ipcId === "create" ? doCreateCctv : doUpdateCctv}
                 onHide={onHide}
             />
         )
@@ -117,6 +117,8 @@ export default function CctvDetail() {
                         <Card.Header as="h5" className="bg-primary text-white">เพิ่มข้อมูล CCTV</Card.Header>
                         <Card.Body>
                             <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                                <h5>Please Enter CCTV information</h5>
+                                <hr/>
                                 <FormGroup as={Row} className="mb-3" controlId="formPlaintextPassword">
                                     <Form.Label column sm="2"> IP Address <span className="text-danger"> * </span> : </Form.Label>
                                     <Col sm="5"> 
