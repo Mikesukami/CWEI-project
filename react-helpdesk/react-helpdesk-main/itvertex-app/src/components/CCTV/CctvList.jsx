@@ -92,8 +92,8 @@ export default function Customer() {
                     </thead>
                     <tbody>
                         {Array.isArray(cctvdata) && cctvdata.length > 0 ? (
-                            cctvdata.slice(startIndex, endIndex).map((item, index) => (
-                                <CctvItem key={item.ipc_id} index={index + 1} {...item} />
+                            cctvdata.slice(startIndex, endIndex).map(item => (
+                                <CctvItem key={item.ipc_id} data={item}  />
                             ))
                         ) : (
                             <tr style={{ textAlign: 'center' }}>

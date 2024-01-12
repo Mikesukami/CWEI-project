@@ -13,7 +13,7 @@ import RepairPage2 from "./components/Repair/RepairPage2";
 import RepairPage3 from "./components/Repair/RepairPage3";
 import RepairPage4 from "./components/Repair/RepairPage4";
 import RepairPage5 from "./components/Repair/RepairPage5";
-import Cctv from "./components/CCTV/CCTV";
+import Cctv from "./components/CCTV/CctvList";
 import CctvDetail from "./components/CCTV/CctvDetail";
 
 function App() {
@@ -130,7 +130,7 @@ function App() {
             }
           />
           <Route
-            path="/cctv/:create"
+            path="/cctv/:ipcId"
             element={
               <div style={{display: "flex"}}>
                 <Sidebar />
