@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
 export default function CctvItem(props) {
-    const { ipc_address, ipc_name, ipc_status_name, index } = props;
+    const { ipc_id, ipc_address, ipc_name, ipc_status_name, index } = props;
     // Define styles based on status
     let statusStyle;
-    switch (ipc_status_name) {
+    switch (props.data.ipc_status_name) {
         case "Online":
             statusStyle = {
                 backgroundColor: "green",
@@ -40,12 +40,12 @@ export default function CctvItem(props) {
     return (
         <>
             <tr style={{ textAlign: 'center' }}>
-                <td>{ipc_address}</td>
-                <td>{ipc_name}</td>
+                <td>{props.data.ipc_address}</td>
+                <td>{props.data.ipc_name}</td>
                 <td>
-                    <span style={statusStyle}>{ipc_status_name}</span>
+                    <span style={statusStyle}>{props.data.ipc_status_name}</span>
                 </td>
-                <td><Link className="btn btn-primary btn-sm">Edit</Link></td>
+                <td><Link to ={`/cctv/${props.data.ipc_id}`} className="btn btn-primary btn-sm">Edit</Link></td>
             </tr>
         </>
     );

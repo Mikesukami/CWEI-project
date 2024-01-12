@@ -8,12 +8,13 @@ import { ConfirmModal } from '../Modal';
 export default function CctvDetail() {
     let params = useParams();
 
+    const [ipcId, setIpcId] = useState(0);
     const [ipAddress, setIpAddress] = useState("");
     const [cctvName, setCctvName] = useState("");
     const [ipcStatus, setIpcStatus] = useState(0);
     const [ipcStatusName, setIpcStatusName] = useState([]);
+
     const [validated, setValidated] = useState(false);
-    const [ipcId, setIpcId] = useState(0);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -22,12 +23,32 @@ export default function CctvDetail() {
         async function fetchData() {
             const response = await API_GET("ipc_status_name");
             // let json = await response.json();
-            console.log(response.data);
-            setIpcStatusName(response.data);         
-            
+            setIpcStatusName(response.data);        
         }
         fetchData();
+        
     }, []);
+
+    useEffect(() => {
+        async function fetchData(ipcId){
+            
+            let json = await API_GET("cctv/" + ipcId);
+
+            var data = json.data[0];
+
+            setIpcId(data.ipc_id);
+            setIpAddress(data.ipc_address);
+            setCctvName(data.ipc_name);
+            setIpcStatus(data.ipc_status);
+
+        }
+
+        if (params.ipcId !== "create"){
+            fetchData([params.ipcId]);
+        }
+
+    }, [params.ipcId]);
+ 
 
     const handleSubmit = (event) => {
         console.log("handleSubmit");
@@ -58,6 +79,10 @@ export default function CctvDetail() {
 
     const doUpdateCctv = async () => {
         console.log("update?");
+        let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus);
+        if (json.result){
+            // window.location = "/cctv/all";
+        }
     }
 
     const onHide = () => {

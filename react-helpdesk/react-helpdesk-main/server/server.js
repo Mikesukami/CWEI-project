@@ -455,6 +455,44 @@ app.post("/api/cctv/create", checkAuth, async (req, res) => {
     }
 });
 
+app.get("/api/cctv/:ipc_id", checkAuth, async (req, res) => {
+    const ipc_id = req.params.ipc_id;
+    try {
+        var result = await Cctv.getByIpcId(pool, ipc_id);
+
+        res.json({
+            result: true,
+            data: result,
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
+app.post("/api/cctv/update", checkAuth, async (req, res) => {
+    const input = req.body;
+
+    try {
+        var result = await Cctv.updateCctv(pool,
+            input.ipc_id,
+            input.ipc_address,
+            input.ipc_name,
+            input.ipc_status);
+
+        res.json({
+            result: true,
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
