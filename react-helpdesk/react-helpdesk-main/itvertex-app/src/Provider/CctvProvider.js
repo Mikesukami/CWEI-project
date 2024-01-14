@@ -21,5 +21,13 @@ export const CctvProvider = {
         });
         
         return json;
-    }
+    },
+
+    deleteCctv: async (ipcId) => {
+        let json = await API_POST("cctv/delete", {
+            ipc_id: ipcId
+        });
+
+        return json;
+    },
 }

@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 export default function CctvItem(props) {
+    const onDelete = async () =>{
+        props.onDelete(props.data);
+    }
+
     const { ipc_id, ipc_address, ipc_name, ipc_status_name, index } = props;
     // Define styles based on status
     let statusStyle;
@@ -48,7 +52,7 @@ export default function CctvItem(props) {
                 </td>
                 <td>
                     <Link to ={`/cctv/${props.data.ipc_id}`} className="btn btn-primary btn-sm">Edit</Link>
-                    <button type="button" className="btn btn-danger btn-sm" style={{ marginLeft: '10px' }}><RiDeleteBin6Line /></button>
+                    <button type="button" className="btn btn-danger btn-sm" style={{ marginLeft: '10px' }} onClick={onDelete}><RiDeleteBin6Line /></button>
                 </td>
             </tr>
         </>

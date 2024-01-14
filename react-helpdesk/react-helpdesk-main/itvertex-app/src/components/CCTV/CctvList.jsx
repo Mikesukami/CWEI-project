@@ -7,8 +7,12 @@ import CctvItem from './CctvItem';
 import Pagination from 'react-bootstrap/Pagination';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { left } from '@popperjs/core';
+import { API_GET, API_POST } from '../../api';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Customer() {
+    const MySwal = withReactContent(Swal);
     const [search, setSearch] = useState("");
     const [cctvdata, setCctvdata] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -38,8 +42,57 @@ export default function Customer() {
         }
         fetchData();
 
-    }, [search]);
+    }, [search , cctvdata.length]);
 
+    const fetchCctvs = async () => {
+        let result = await API_GET("cctv/all/");
+        console.log(result);
+        setCctvdata(result.data);
+        setCurrentPage(0);
+
+    }
+
+
+    // Delete function
+    const onDelete = (data) => {
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // User clicked "Yes", proceed with deletion
+                let json = await API_POST("cctv/delete", {
+                    ipc_id: data.ipc_id
+                });
+    
+                if (json.result) {
+                    fetchCctvs();
+                    MySwal.fire(
+                        'Deleted!',
+                        'Your data has been deleted.',
+                        'success'
+                    );
+                }
+            }
+        });
+    };
+    // const onDelete = async (data) => {
+    //     let json = await API_POST("cctv/delete", {
+    //         ipc_id: data.ipc_id
+    //     });
+
+    //     if (json.result){
+    //         fetchCctvs();
+    //     }
+    // };
+
+
+    // Pagination
     const totalPages = Math.ceil(cctvdata.length / numPerPage);
     const startIndex = currentPage * numPerPage;
     const endIndex = startIndex + numPerPage;
@@ -93,7 +146,7 @@ export default function Customer() {
                     <tbody>
                         {Array.isArray(cctvdata) && cctvdata.length > 0 ? (
                             cctvdata.slice(startIndex, endIndex).map(item => (
-                                <CctvItem key={item.ipc_id} data={item}  />
+                                <CctvItem key={item.ipc_id} data={item} onDelete={onDelete}  />
                             ))
                         ) : (
                             <tr style={{ textAlign: 'center' }}>

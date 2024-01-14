@@ -26,4 +26,12 @@ module.exports = {
 
         return await pool.query(sql);
     },
+
+    deleteCctv: async (pool, ipcId) => {
+        var sql = "DELETE FROM tbl_ipc WHERE ipc_id = ?";
+        sql = mysql.format(sql, [ipcId]);
+
+        return await pool.query(sql);
+    }
+
 }

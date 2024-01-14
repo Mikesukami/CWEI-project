@@ -493,6 +493,23 @@ app.post("/api/cctv/update", checkAuth, async (req, res) => {
     }
 });
 
+app.post("/api/cctv/delete", checkAuth, async (req, res) => {
+    const input = req.body;
+    try{
+        var result = await Cctv.deleteCctv(pool, input.ipc_id);
+
+        res.json({
+            result: true,
+        });
+        
+    }catch(ex){
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
