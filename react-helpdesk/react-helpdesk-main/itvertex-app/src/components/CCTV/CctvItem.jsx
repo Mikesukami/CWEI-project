@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export default function CctvItem(props) {
     const { ipc_id, ipc_address, ipc_name, ipc_status_name, index } = props;
@@ -45,7 +46,10 @@ export default function CctvItem(props) {
                 <td>
                     <span style={statusStyle}>{props.data.ipc_status_name}</span>
                 </td>
-                <td><Link to ={`/cctv/${props.data.ipc_id}`} className="btn btn-primary btn-sm">Edit</Link></td>
+                <td>
+                    <Link to ={`/cctv/${props.data.ipc_id}`} className="btn btn-primary btn-sm">Edit</Link>
+                    <button type="button" className="btn btn-danger btn-sm" style={{ marginLeft: '10px' }}><RiDeleteBin6Line /></button>
+                </td>
             </tr>
         </>
     );
