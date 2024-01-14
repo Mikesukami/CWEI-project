@@ -27,6 +27,8 @@ import "./Sidebar.css"
 import { auto } from '@popperjs/core';
 import React, { useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
+import { LuScanFace } from "react-icons/lu";
+import { FaRoadBarrier } from "react-icons/fa6";
 import { ConfirmModal } from '../Modal';
 
 export default function Sidebar() {
@@ -119,19 +121,19 @@ export default function Sidebar() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/repair/page1" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
+                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
                                         <PiPlugsConnected style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Online</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/repair/page1" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fadf11' }}>
+                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fadf11' }}>
                                         <BiSolidHourglassTop style={{ width: '20px', marginLeft: '10px'}} />
                                         <span style={{ marginLeft: '15px' }}>In progress</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/repair/page1" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#f54040' }}>
+                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#f54040' }}>
                                         <TbPlugConnectedX style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Offine</span>
                                     </Link>
@@ -153,14 +155,14 @@ export default function Sidebar() {
                         <div className="collapse" id="control-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <Link to="/repair/page1" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
-                                        <RiFileList2Line style={{ width: '20px', marginLeft: '10px' }} />
+                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
+                                        <LuScanFace style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Face Scan</span>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/repair/page1" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
-                                        <PiPlugsConnected style={{ width: '20px', marginLeft: '10px' }} />
+                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
+                                        <FaRoadBarrier style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>ไม้ยก</span>
                                     </Link>
                                 </li>
@@ -173,7 +175,7 @@ export default function Sidebar() {
                     <li className="nav-item ">
                         <Link to="/customer" className="nav-link text-white" aria-current="page" style={{ display: 'flex', alignItems: 'center' }}>
                             <BiSolidUserDetail style={{ width: '20px' }} />
-                            <span style={{ marginLeft: '15px' }}>ข้อมูลลูกค้า</span>
+                            <span style={{ marginLeft: '15px' }}>ข้อมูลผู้ใช้</span>
                         </Link>
                     </li>
                 </ul>
