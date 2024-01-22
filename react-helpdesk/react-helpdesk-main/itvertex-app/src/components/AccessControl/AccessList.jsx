@@ -121,7 +121,7 @@ export default function AccessControl() {
 
     return (
         <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
-            <Link className="btn btn-success btn-sm" to="/cctv/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+ เพิ่มข้อมูล Device</Link>
+            <Link className="btn btn-success btn-sm" to="/AccessControl/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+ เพิ่มข้อมูล Device</Link>
 
             <InputGroup style={{ marginLeft: '3rem', marginTop: '30px', width: '40%' }}>
                 <Form.Control

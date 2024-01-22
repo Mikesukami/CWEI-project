@@ -9,6 +9,7 @@ const util = require('util');
 
 // *---------- Library ------------
 const Cctv = require('./libs/Cctv');
+const AccessControl = require('./libs/AccessControl');
 
 
 // *----------- Use --------------
@@ -528,6 +529,83 @@ app.get("/api/ac_read_all", checkAuth, (req, res) => {
         }
     });
 
+});
+
+app.get("/api/ac_place_name", checkAuth, (req, res) => {
+    const query = "SELECT * FROM tbl_place";
+
+    pool.query(query, (error, results) => {
+        if (error) {
+            res.json({
+                result: false,
+                message: error.message,
+            });
+        } else {
+            res.json({
+                result: true,
+                data: results,
+            });
+        }
+    });
+});
+
+app.post("/api/AccessControl/create", checkAuth, async (req, res) => {
+    const input = req.body;
+
+    try {
+        var result = await AccessControl.createAccess(pool,
+            input.ac_ip,
+            input.ac_device_name,
+            input.place_id);
+            
+        res.json({
+            result: true,
+        });    
+
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
+app.get("/api/AccessControl/:ac_id", checkAuth, async (req, res) => {
+    const ac_id = req.params.ac_id;
+    try {
+        var result = await AccessControl.getByAcId(pool, ac_id);
+
+        res.json({
+            result: true,
+            data: result,
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
+app.post("/api/AccessControl/update", checkAuth, async (req, res) => {
+    const input = req.body;
+    
+    try {
+        var result = await AccessControl.updateAccess(pool,
+            input.ac_id,
+            input.ac_ip,
+            input.ac_device_name,
+            input.place_id);
+
+        res.json({
+            result: true,
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
 });
 
 
