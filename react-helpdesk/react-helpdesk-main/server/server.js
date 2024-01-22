@@ -589,7 +589,7 @@ app.get("/api/AccessControl/:ac_id", checkAuth, async (req, res) => {
 
 app.post("/api/AccessControl/update", checkAuth, async (req, res) => {
     const input = req.body;
-    
+
     try {
         var result = await AccessControl.updateAccess(pool,
             input.ac_id,
@@ -601,6 +601,23 @@ app.post("/api/AccessControl/update", checkAuth, async (req, res) => {
             result: true,
         });
     } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message,
+        });
+    }
+});
+
+app.post("/api/AccessControl/delete", checkAuth, async (req, res) => {
+    const input = req.body;
+    try{
+        var result = await AccessControl.deleteAccess(pool, input.ac_id);
+
+        res.json({
+            result: true,
+        });
+        
+    }catch(ex){
         res.json({
             result: false,
             message: ex.message,

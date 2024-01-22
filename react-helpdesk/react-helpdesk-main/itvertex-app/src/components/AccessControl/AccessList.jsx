@@ -43,7 +43,7 @@ export default function AccessControl() {
     }, [search, accessdata.length]);
 
     const fetchAc = async () => {
-        let result = await API_GET("cctv/all/");
+        let result = await API_GET("AccessControl/all/");
         console.log(result);
         setAccessdata(result.data);
         setCurrentPage(0);
@@ -63,7 +63,7 @@ export default function AccessControl() {
             if (result.isConfirmed) {
                 // User clicked "Yes", proceed with deletion
                 let json = await API_POST("AccessControl/delete", {
-                    ipc_id: data.ipc_id
+                    ac_id: data.ac_id
                 });
 
                 if (json.result) {
