@@ -166,7 +166,7 @@ export default function Customer() {
                     <Pagination.Next disabled={currentPage === Math.ceil(cctvdata.length / numPerPage) - 1} onClick={() => setCurrentPage(currentPage + 1)} />
                     <Pagination.Last onClick={lastPage} />
 
-                    <Dropdown className="float-end">
+                        <Dropdown className="float-end" style={{ marginLeft: '10px' }}>
                         <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                             Rows per page: {numPerPage}
                         </Dropdown.Toggle>
