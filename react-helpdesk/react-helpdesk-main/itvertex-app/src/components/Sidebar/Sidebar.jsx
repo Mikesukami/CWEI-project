@@ -155,7 +155,7 @@ export default function Sidebar() {
                         <div className="collapse" id="control-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
+                                    <Link to="/AccessControl/all" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <LuScanFace style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Face Scan</span>
                                     </Link>

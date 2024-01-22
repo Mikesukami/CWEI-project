@@ -15,6 +15,7 @@ import RepairPage4 from "./components/Repair/RepairPage4";
 import RepairPage5 from "./components/Repair/RepairPage5";
 import Cctv from "./components/CCTV/CctvList";
 import CctvDetail from "./components/CCTV/CctvDetail";
+import AccessControl from "./components/AccessControl/AccessList";
 
 function App() {
   return (
@@ -135,6 +136,15 @@ function App() {
               <div style={{display: "flex"}}>
                 <Sidebar />
                 <CctvDetail />
+              </div>
+            }
+          />
+          <Route
+            path="/AccessControl/all"
+            element={
+              <div style={{display: "flex"}}>
+                <Sidebar />
+                <AccessControl />
               </div>
             }
           />

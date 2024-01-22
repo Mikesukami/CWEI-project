@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import md5 from "md5";
 import Swal from 'sweetalert2';
 import "./Login.css";
+import logo2 from "../asset/image/Logo2.png"
 
 export default function Login() {
 
@@ -133,8 +134,8 @@ export default function Login() {
                         <Form noValidate validated={validated} onSubmit={onLogin} className="sign-in-form">
                             {/* ------------------------------- */}
                             <div className="logo">
-                                <img src={Logo} alt="Logo" />
-                                <h4>IT-Services</h4> 
+                                <img src={logo2} alt="Logo" />
+                                <h4>SYSTRACK</h4> 
                             </div>
                             {/* ------------------------------- */}
                             <div className="heading">
@@ -179,7 +180,7 @@ export default function Login() {
                         <div className="text-slider">
                             <div className="text-wrap">
                                 <div className="text-group">
-                                    <h2>ศูนย์บริการซ่อม-จัดจำหน่าย อุปกรณ์ IT</h2>
+                                    <h2>For Hardware Tracking with IT</h2>
                                 </div>
                             </div>
                         </div>

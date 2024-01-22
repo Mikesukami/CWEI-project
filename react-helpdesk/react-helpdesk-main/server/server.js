@@ -510,6 +510,26 @@ app.post("/api/cctv/delete", checkAuth, async (req, res) => {
     }
 });
 
+app.get("/api/ac_read_all", checkAuth, (req, res) => {
+    const query = "SELECT t1.ac_id, t1.ac_ip, t1.ac_device_name, t2.place_name FROM tbl_access_ct t1" +
+     " JOIN tbl_place t2 ON t1.place_id = t2.place_id";
+
+    pool.query(query, (error, results) => {
+        if (error) {
+            res.json({
+                result: false,
+                message: error.message,
+            });
+        } else {
+            res.json({
+                result: true,
+                data: results,
+            });
+        }
+    });
+
+});
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
