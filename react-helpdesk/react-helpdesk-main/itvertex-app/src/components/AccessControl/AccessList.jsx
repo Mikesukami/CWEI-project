@@ -16,6 +16,8 @@ export default function AccessControl() {
     const [accessdata, setAccessdata] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [numPerPage, setNumPerPage] = useState(12);
+    const [acPlaceName, setAcPlaceName] = useState([]);
+    const [selectedBuilding, setSelectedBuilding] = useState("");
 
     useEffect(() => {
         async function fetchData() {
@@ -34,13 +36,29 @@ export default function AccessControl() {
             let json = await response.json();
 
             //* ค้นหาข้อมูล
-            const result = json.data.filter((item) => item.ac_ip.includes(search) || item.ac_device_name.includes(search));
+            // const result = json.data.filter((item) => item.ac_ip.includes(search) || item.ac_device_name.includes(search));
+
+            const result = json.data.filter((item) =>
+                (item.ac_ip.includes(search) || item.ac_device_name.includes(search)) &&
+                (selectedBuilding === "" || item.place_name === selectedBuilding)
+            );
 
             setAccessdata(result);
             setCurrentPage(0); // Reset to the first page when the search changes
         }
         fetchData();
-    }, [search, accessdata.length]);
+    }, [search, selectedBuilding]);
+
+    useEffect(() => {
+        async function fetchData() {
+            //This end point from server
+            const response = await API_GET("ac_place_name");
+            // let json = await response.json();
+            setAcPlaceName(response.data);        
+        }
+        fetchData();
+        
+    }, []);
 
     const fetchAc = async () => {
         let result = await API_GET("AccessControl/all/");
@@ -119,10 +137,15 @@ export default function AccessControl() {
         setCurrentPage(0);
     };
 
+    const handleBuildingSelect = (building) => {
+        setSelectedBuilding(building);
+    };
+
     return (
         <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
             <Link className="btn btn-success btn-sm" to="/AccessControl/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+ เพิ่มข้อมูล Device</Link>
 
+            <div style={{ display: 'flex', alignItems: 'center' }}>
             <InputGroup style={{ marginLeft: '3rem', marginTop: '30px', width: '40%' }}>
                 <Form.Control
                     placeholder="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
@@ -132,6 +155,26 @@ export default function AccessControl() {
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </InputGroup>
+            <Dropdown style={{ marginLeft: '10px', marginTop: '30px',}}>
+                <Dropdown.Toggle variant="secondary" id="dropdown-building">
+                    Select Building : {selectedBuilding || "All"}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {acPlaceName.map((item, index) => (
+                        <Dropdown.Item key={index} 
+                        onClick={() => handleBuildingSelect(item.place_name)}>
+                            {item.place_name}
+                        </Dropdown.Item>
+                    ))
+                    }
+                    <Dropdown.Item onClick={() => handleBuildingSelect("")}>
+                        All
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+            </div>
+
 
             <div style={{ margin: '3rem', marginTop: '1rem' }}>
                 <Table striped bordered hover>
