@@ -161,7 +161,7 @@ export default function Sidebar() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
+                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <FaRoadBarrier style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>ไม้ยก</span>
                                     </Link>
