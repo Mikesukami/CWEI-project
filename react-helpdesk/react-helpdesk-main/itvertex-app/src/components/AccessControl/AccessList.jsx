@@ -47,7 +47,7 @@ export default function AccessControl() {
             setCurrentPage(0); // Reset to the first page when the search changes
         }
         fetchData();
-    }, [search, selectedBuilding]);
+    }, [search, selectedBuilding, accessdata.length]);
 
     useEffect(() => {
         async function fetchData() {
