@@ -9,6 +9,7 @@ import { API_GET, API_POST } from '../../api';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import AccessItem from './AccessItem';
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function AccessControl() {
     const MySwal = withReactContent(Swal);
@@ -19,32 +20,68 @@ export default function AccessControl() {
     const [acPlaceName, setAcPlaceName] = useState([]);
     const [selectedBuilding, setSelectedBuilding] = useState("");
 
+    const [loading, setLoading] = useState(false);
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const response = await fetch(
+    //             "http://localhost:4080/api/ac_read_all",
+    //             {
+    //                 method: "GET",
+    //                 headers: {
+    //                     Accept: "application/json",
+    //                     'Content-Type': 'application/json',
+    //                     Authorization: "Bearer " + localStorage.getItem("access_token")
+    //                 }
+    //             }
+    //         );
+
+    //         let json = await response.json();
+
+    //         //* ค้นหาข้อมูล
+    //         // const result = json.data.filter((item) => item.ac_ip.includes(search) || item.ac_device_name.includes(search));
+
+    //         const result = json.data.filter((item) =>
+    //             (item.ac_ip.includes(search) || item.ac_device_name.includes(search)) &&
+    //             (selectedBuilding === "" || item.place_name === selectedBuilding)
+    //         );
+
+    //         setAccessdata(result);
+    //         setCurrentPage(0); // Reset to the first page when the search changes
+    //     }
+    //     fetchData();
+    // }, [search, selectedBuilding, accessdata.length]);
+
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch(
-                "http://localhost:4080/api/ac_read_all",
-                {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/json",
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.getItem("access_token")
+            setLoading(true);
+            try {
+                const response = await fetch(
+                    "http://localhost:4080/api/ac_read_all",
+                    {
+                        method: "GET",
+                        headers: {
+                            Accept: "application/json",
+                            'Content-Type': 'application/json',
+                            Authorization: "Bearer " + localStorage.getItem("access_token")
+                        }
                     }
-                }
-            );
+                );
 
-            let json = await response.json();
+                let json = await response.json();
 
-            //* ค้นหาข้อมูล
-            // const result = json.data.filter((item) => item.ac_ip.includes(search) || item.ac_device_name.includes(search));
+                const result = json.data.filter((item) =>
+                    (item.ac_ip.includes(search) || item.ac_device_name.includes(search)) &&
+                    (selectedBuilding === "" || item.place_name === selectedBuilding)
+                );
 
-            const result = json.data.filter((item) =>
-                (item.ac_ip.includes(search) || item.ac_device_name.includes(search)) &&
-                (selectedBuilding === "" || item.place_name === selectedBuilding)
-            );
-
-            setAccessdata(result);
-            setCurrentPage(0); // Reset to the first page when the search changes
+                setAccessdata(result);
+                setCurrentPage(0);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
+            }
         }
         fetchData();
     }, [search, selectedBuilding, accessdata.length]);
@@ -54,10 +91,10 @@ export default function AccessControl() {
             //This end point from server
             const response = await API_GET("ac_place_name");
             // let json = await response.json();
-            setAcPlaceName(response.data);        
+            setAcPlaceName(response.data);
         }
         fetchData();
-        
+
     }, []);
 
     const fetchAc = async () => {
@@ -142,87 +179,100 @@ export default function AccessControl() {
     };
 
     return (
-        <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
-            <Link className="btn btn-success btn-sm" to="/AccessControl/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+ เพิ่มข้อมูล Device</Link>
+        <>
+            <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
+                <Link className="btn btn-success btn-sm" to="/AccessControl/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+ เพิ่มข้อมูล Device</Link>
 
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-            <InputGroup style={{ marginLeft: '3rem', marginTop: '30px', width: '40%' }}>
-                <Form.Control
-                    placeholder="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
-                    aria-label="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
-                    aria-describedby="basic-addon2"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-            </InputGroup>
-            <Dropdown style={{ marginLeft: '10px', marginTop: '30px',}}>
-                <Dropdown.Toggle variant="secondary" id="dropdown-building">
-                    Select Building : {selectedBuilding || "All"}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    {acPlaceName.map((item, index) => (
-                        <Dropdown.Item key={index} 
-                        onClick={() => handleBuildingSelect(item.place_name)}>
-                            {item.place_name}
-                        </Dropdown.Item>
-                    ))
-                    }
-                    <Dropdown.Item onClick={() => handleBuildingSelect("")}>
-                        All
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-            </div>
-
-
-            <div style={{ margin: '3rem', marginTop: '1rem' }}>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr role="row" className="bg-secondary text-white">
-                            <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>IP Address</th>
-                            <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Device Name</th>
-                            <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>อาคาร</th>
-                            <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Array.isArray(accessdata) && accessdata.length > 0 ? (
-                            accessdata.slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).map(item => (
-                                <AccessItem key={item.ac_id} data={item} onDelete={onDelete} />
-                            ))
-                        ) : (
-                            <tr style={{ textAlign: 'center' }}>
-                                <td colSpan="6">ไม่พบข้อมูลที่ค้นหา</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            </div>
-            <div className='container mt-3 border-bottom' style={{ marginLeft: '50px' }}>
-                <Pagination>
-                    <Pagination.First onClick={firstPage} />
-                    <Pagination.Prev disabled={currentPage === 0} onClick={() => setCurrentPage(currentPage - 1)} />
-
-                    {renderPageNumbers()}
-
-                    <Pagination.Next disabled={currentPage === Math.ceil(accessdata.length / numPerPage) - 1} onClick={() => setCurrentPage(currentPage + 1)} />
-                    <Pagination.Last onClick={lastPage} />
-
-                    <Dropdown className="float-end" style={{ marginLeft: '10px' }}>
-                        <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                            Rows per page: {numPerPage}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <InputGroup style={{ marginLeft: '3rem', marginTop: '30px', width: '40%' }}>
+                        <Form.Control
+                            placeholder="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
+                            aria-label="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
+                            aria-describedby="basic-addon2"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </InputGroup>
+                    <Dropdown style={{ marginLeft: '10px', marginTop: '30px', }}>
+                        <Dropdown.Toggle variant="secondary" id="dropdown-building">
+                            Select Building : {selectedBuilding || "All"}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleNumPerPageSelect(10)}>10</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleNumPerPageSelect(25)}>25</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleNumPerPageSelect(50)}>50</Dropdown.Item>
-                            <Dropdown.Item onClick={showAllData}>All</Dropdown.Item>
+                            {acPlaceName.map((item, index) => (
+                                <Dropdown.Item key={index}
+                                    onClick={() => handleBuildingSelect(item.place_name)}>
+                                    {item.place_name}
+                                </Dropdown.Item>
+                            ))
+                            }
+                            <Dropdown.Item onClick={() => handleBuildingSelect("")}>
+                                All
+                            </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                </Pagination>
+                </div>
+
+                {loading ? ( // Conditionally render Bootstrap spinner
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </div>
+                ) : (
+                    <div style={{ margin: '3rem', marginTop: '1rem' }}>
+                        <div style={{ margin: '3rem', marginTop: '1rem' }}>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr role="row" className="bg-secondary text-white">
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>IP Address</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Device Name</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>อาคาร</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Array.isArray(accessdata) && accessdata.length > 0 ? (
+                                        accessdata.slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).map(item => (
+                                            <AccessItem key={item.ac_id} data={item} onDelete={onDelete} />
+                                        ))
+                                    ) : (
+                                        <tr style={{ textAlign: 'center' }}>
+                                            <td colSpan="6">ไม่พบข้อมูลที่ค้นหา</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        </div>
+                        <div className='container mt-3 border-bottom' style={{ marginLeft: '50px' }}>
+                            <Pagination>
+                                <Pagination.First onClick={firstPage} />
+                                <Pagination.Prev disabled={currentPage === 0} onClick={() => setCurrentPage(currentPage - 1)} />
+
+                                {renderPageNumbers()}
+
+                                <Pagination.Next disabled={currentPage === Math.ceil(accessdata.length / numPerPage) - 1} onClick={() => setCurrentPage(currentPage + 1)} />
+                                <Pagination.Last onClick={lastPage} />
+
+                                <Dropdown className="float-end" style={{ marginLeft: '10px' }}>
+                                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                                        Rows per page: {numPerPage}
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={() => handleNumPerPageSelect(10)}>10</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleNumPerPageSelect(25)}>25</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleNumPerPageSelect(50)}>50</Dropdown.Item>
+                                        <Dropdown.Item onClick={showAllData}>All</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Pagination>
+                        </div>
+                    </div>
+                )}
+
             </div>
-        </div>
+
+        </>
     );
 }
