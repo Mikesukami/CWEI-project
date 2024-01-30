@@ -7,6 +7,8 @@ import md5 from "md5";
 import Swal from 'sweetalert2';
 import "./Login.css";
 import logo2 from "../asset/image/Logo2.png"
+import { SERVER_URL } from "../../app.config";
+
 
 export default function Login() {
 
@@ -18,7 +20,7 @@ export default function Login() {
 
     //* Function getAuthenToken ติดต่อกับ Back-end ในส่วนตรวจสอบข้อมูล
     const getAuthenToken = async () => {
-        const response = await fetch("http://localhost:4080/api/authen_request",{
+        const response = await fetch(SERVER_URL + "authen_request",{
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -41,7 +43,7 @@ export default function Login() {
         var authenSignature = md5(baseString);
 
         const response = await fetch(
-            "http://localhost:4080/api/access_request", {
+            SERVER_URL + "access_request", {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
