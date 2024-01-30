@@ -10,6 +10,7 @@ import { API_GET, API_POST } from '../../api';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Spinner from 'react-bootstrap/Spinner';
+import { SERVER_URL } from '../../app.config';
 
 export default function Customer() {
     const MySwal = withReactContent(Swal);
@@ -50,7 +51,7 @@ export default function Customer() {
             setLoading(true);
             try {
                 const response = await fetch(
-                    "http://localhost:4080/api/cctv_read_all",
+                    SERVER_URL + "cctv_read_all",
                     {
                         method: "GET",
                         headers: {

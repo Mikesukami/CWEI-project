@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import AccessItem from './AccessItem';
 import Spinner from 'react-bootstrap/Spinner';
+import { SERVER_URL } from '../../app.config';
 
 export default function AccessControl() {
     const MySwal = withReactContent(Swal);
@@ -57,7 +58,7 @@ export default function AccessControl() {
             setLoading(true);
             try {
                 const response = await fetch(
-                    "http://localhost:4080/api/ac_read_all",
+                    SERVER_URL +  "ac_read_all",
                     {
                         method: "GET",
                         headers: {

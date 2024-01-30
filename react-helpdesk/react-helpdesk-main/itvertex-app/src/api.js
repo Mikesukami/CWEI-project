@@ -2,7 +2,7 @@ import { SERVER_URL } from "./app.config";
 
 export async function API_GET(url){
     const response = await fetch(
-        SERVER_URL + "api/" + url,
+        SERVER_URL + url,
         {
             method: "GET",
             headers: {
@@ -19,7 +19,7 @@ export async function API_GET(url){
 
 export async function API_POST(url, data) {
     const response = await fetch(
-        SERVER_URL + "api/" + url,
+        SERVER_URL + url,
         {
             method: "POST",
             headers: {
