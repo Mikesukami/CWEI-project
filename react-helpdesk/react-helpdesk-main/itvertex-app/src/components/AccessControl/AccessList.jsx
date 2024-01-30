@@ -220,7 +220,7 @@ export default function AccessControl() {
                         </Spinner>
                     </div>
                 ) : (
-                    <div style={{ margin: '3rem', marginTop: '1rem' }}>
+                    <div>
                         <div style={{ margin: '3rem', marginTop: '1rem' }}>
                             <Table striped bordered hover>
                                 <thead>
