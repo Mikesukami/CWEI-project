@@ -36,9 +36,9 @@ app.use(cors());
 const pool = mysql.createPool({
     connectLimit: 10,
     host : "sql6.freemysqlhosting.net",
-    user: "sql6679142",
-    password : "7a2jjbr4u2",
-    database : "sql6679142"
+    user: "sql6680797",
+    password : "FrY5K5x3xj",
+    database : "sql6680797"
 });
 pool.query = util.promisify(pool.query);
 // *------------------------------
