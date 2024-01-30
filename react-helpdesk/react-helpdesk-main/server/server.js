@@ -5,6 +5,7 @@ const bodyParser = require('body-parser'); //* ตัวอ่านข้อม
 const cors = require('cors'); 
 const jwt = require('jsonwebtoken');
 const util = require('util');
+const path = require('path');
 // *------------------------------
 
 // *---------- Library ------------
@@ -15,18 +16,29 @@ const AccessControl = require('./libs/AccessControl');
 // *----------- Use --------------
 const app = express(); // * ตัวแปร app เป็นตัวแปรใช้เรียกในส่วนของ express
 const port = 4080; // * ตัวแปรใช้ port
+app.use(express.static(path.resolve(__dirname, 'dist'))); // * ใช้งานไฟล์ static ที่อยู่ในโฟลเดอร์ dist
 app.use(bodyParser.urlencoded({extended: false})) //* เรียกใช้ middleware body-parser เพื่อแปลงข้อมูลจาก body ของ request เป็น JavaScript objects
 app.use(bodyParser.json()); //* ใช้ไฟล์เป็น .json
 app.use(cors());
 // *------------------------------
 
 // *----- เปิดใช้งาน Server --------
+// const pool = mysql.createPool({
+//     connectLimit: 10,
+//     host : "localhost",
+//     user: "root",
+//     password : "",
+//     database : "itservice_db"
+// });
+// pool.query = util.promisify(pool.query);
+
+
 const pool = mysql.createPool({
     connectLimit: 10,
-    host : "localhost",
-    user: "root",
-    password : "",
-    database : "itservice_db"
+    host : "sql6.freemysqlhosting.net",
+    user: "sql6679142",
+    password : "7a2jjbr4u2",
+    database : "sql6679142"
 });
 pool.query = util.promisify(pool.query);
 // *------------------------------
