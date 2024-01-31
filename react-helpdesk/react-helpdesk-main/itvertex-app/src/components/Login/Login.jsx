@@ -19,45 +19,94 @@ export default function Login() {
 
 
     //* Function getAuthenToken ติดต่อกับ Back-end ในส่วนตรวจสอบข้อมูล
+    // const getAuthenToken = async () => {
+    //     const response = await fetch(SERVER_URL + "authen_request",{
+    //         method: "POST",
+    //         headers: {
+    //             Accept: "application/json",
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             username: md5(username) //* เก็บค่า username เป็นรูปแบบ username
+    //         })
+    //     });
+
+    //     const data = await response.json();
+    //     console.log(data);
+    //     return data;
+    // }
+
     const getAuthenToken = async () => {
-        const response = await fetch(SERVER_URL + "authen_request",{
+
+        const response = await fetch(
+          SERVER_URL + "authen_request",
+          {
             method: "POST",
             headers: {
-                Accept: "application/json",
-                'Content-Type': 'application/json',
+              Accept: "application/json",
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username: md5(username) //* เก็บค่า username เป็นรูปแบบ username
+              username: md5(username)
             })
-        });
-
+          }
+        );
+    
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         return data;
-    }
+    
+    
+      };
 
 
      //* Function GetAccressToken
-     const getAccessToken = async (authToken) => {
+    //  const getAccessToken = async (authToken) => {
+    //     var baseString = username + "&" + md5(password);
+    //     var authenSignature = md5(baseString);
+
+    //     const response = await fetch(
+    //         SERVER_URL + "access_request", {
+    //             method: "POST",
+    //             headers: {
+    //                 Accept: "application/json",
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 auth_signature: authenSignature,
+    //                 auth_token: authToken
+    //             })
+    //         }
+    //     )
+    //     const data = await response.json();
+    //     return data;
+    // };
+
+    const getAccessToken = async (authToken) => {
+
         var baseString = username + "&" + md5(password);
         var authenSignature = md5(baseString);
-
+    
         const response = await fetch(
-            SERVER_URL + "access_request", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    auth_signature: authenSignature,
-                    auth_token: authToken
-                })
-            }
-        )
+          SERVER_URL + "access_request",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              auth_signature: authenSignature,
+              auth_token: authToken
+            })
+          }
+        );
+    
         const data = await response.json();
+        // console.log(data);
         return data;
-    };
+    
+      };
 
 
     const onLogin = (event) => {
