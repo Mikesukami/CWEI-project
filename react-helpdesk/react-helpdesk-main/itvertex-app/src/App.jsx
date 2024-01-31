@@ -22,7 +22,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Login/>} /> //*หน้าแรกของเว็บ
+          {/* <Route path="/" element={<Login/>} /> //*หน้าแรกของเว็บ */}
+          <Route 
+            path="/" 
+            element={
+              <div style={{display: "flex"}}>
+                <Sidebar />
+                <AccessControl/>
+              </div>
+            }
+          />
           <Route 
             path="/admin" 
             element={
